@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="role">
+<!-- 	<resultMap id="BaseResultMap" type="com.entity.role"> -->
+<!-- 		<constructor> -->
+<!-- 			<idArg column="role_id" javaType="java.lang.Integer" jdbcType="INTEGER" /> -->
+<!-- 			<arg column="role_name" javaType="java.lang.String" jdbcType="VARCHAR" /> -->
+<!-- 			<arg column="role_pwd" javaType="java.lang.String" jdbcType="VARCHAR" /> -->
+<!-- 			<arg column="role_identity" javaType="java.lang.Integer" jdbcType="VARCHAR" /> -->
+<!-- 		</constructor> -->
+<!-- 	</resultMap> -->
+	<sql id="Base_Column_List">
+		role_id,role_name, role_pwd,role_identity,role_status
+	</sql>
+	<select id="selectAllRoles" resultType="Role">
+    select 
+    <include refid="Base_Column_List" />
+    from role
+  </select>
+  
+  <select id="loginChecked" parameterType="String" resultType="Role">
+  	select 
+  	<include refid="Base_Column_List" /> 
+  	from role where role_name=#{role_name} 
+  </select>
+  
+  <insert id="addRole" parameterType="Role">
+  	insert into role(role_name,role_pwd,role_identity,role_status) values(#{role_name},#{role_pwd},#{role_identity},#{role_status})
+  </insert>
+  
+  <update id="updateRole" parameterType="Role">
+  	update role set
+  	role_name={role_name},role_pwd=#{role_pwd},role_identity=#{role_identity},role_status=#{role_status}
+  	where role_id=#{role_id}
+  </update>
+  
+  <delete id="deleteRole" parameterType="Integer">
+  	delete from role where role_id=#{role_id}
+  </delete>
+</mapper>
